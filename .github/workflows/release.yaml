@@ -22,11 +22,21 @@ jobs:
         bin/partner-charts-ci auto
         git push origin main-source
 
-    - name: Update main branch
+    - name: Create PR to update main branch
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_WORKFLOW: ${{ github.workflow }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
       run: |
         # checkout action only fetches main-source, so we need to fetch main branch also
         git fetch origin main --depth 1
         git checkout main
-        git checkout main-source -- index.yaml assets
-        git commit -m "Release partner charts"
-        git push origin main
+        UPDATE_BRANCH="auto-update/$(date '+%s')"
+        git checkout -b "$UPDATE_BRANCH"
+        git rm -r assets index.yaml
+        git checkout main-source -- assets index.yaml
+        git commit -m "Update partner charts"
+        git push --set-upstream origin "$UPDATE_BRANCH"
+        TITLE="Update partner charts"
+        BODY="This PR was created by workflow \"$GITHUB_WORKFLOW\"."
+        gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$UPDATE_BRANCH" --title "$TITLE" --body "$BODY"
