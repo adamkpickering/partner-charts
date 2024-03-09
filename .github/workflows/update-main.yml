@@ -1,0 +1,29 @@
+name: Update main branch from main-source
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main-source
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: main
+
+    - name: Configure git
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Update main branch with latest from main-source
+      run: |
+        # checkout action only fetches main, so we need to fetch main-source
+        git fetch origin main-source --depth 1
+        git rm -r assets index.yaml
+        git checkout main-source -- assets index.yaml
+        git commit -m "Update partner charts"
+        git push origin
