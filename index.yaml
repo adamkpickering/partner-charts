@@ -23540,6 +23540,39 @@ entries:
       catalog.cattle.io/release-name: datadog-operator
     apiVersion: v2
     appVersion: 1.4.0
+    created: "2024-03-17T00:34:12.083162937Z"
+    dependencies:
+    - alias: datadogCRDs
+      condition: installCRDs
+      name: datadog-crds
+      repository: file://./charts/datadog-crds
+      tags:
+      - install-crds
+      version: =1.4.0
+    description: Datadog Operator
+    digest: 5394a90eeb656fc2c6cbc94b195235ba016474a60122790cc7797491beebd969
+    home: https://www.datadoghq.com
+    icon: https://datadog-live.imgix.net/img/dd_logo_70x75.png
+    keywords:
+    - monitoring
+    - alerting
+    - metric
+    maintainers:
+    - email: support@datadoghq.com
+      name: Datadog
+    name: datadog-operator
+    sources:
+    - https://app.datadoghq.com/account/settings#agent/kubernetes
+    - https://github.com/DataDog/datadog-agent
+    urls:
+    - assets/datadog/datadog-operator-1.5.2.tgz
+    version: 1.5.2
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Datadog Operator
+      catalog.cattle.io/release-name: datadog-operator
+    apiVersion: v2
+    appVersion: 1.4.0
     created: "2024-03-15T00:32:12.368245852Z"
     dependencies:
     - alias: datadogCRDs
@@ -27249,6 +27282,111 @@ entries:
       artifacthub.io/containsSecurityUpdates: "true"
       artifacthub.io/images: |
         - name: auth-server
+          image: ghcr.io/janssenproject/jans/auth-server:1.1.0-1
+        - name: auth-server-key-rotation
+          image: ghcr.io/janssenproject/jans/certmanager:1.1.0-1
+        - name: configuration-manager
+          image: ghcr.io/janssenproject/jans/configurator:1.1.0-1
+        - name:  config-api
+          image: ghcr.io/janssenproject/jans/config-api:1.1.0-1
+        - name: fido2
+          image: ghcr.io/janssenproject/jans/fido2:1.1.0-1
+        - name: persistence
+          image: ghcr.io/janssenproject/jans/persistence-loader:1.1.0-1
+        - name: scim
+          image: ghcr.io/janssenproject/jans/scim:1.1.0-1
+        - name: casa
+          image: ghcr.io/janssenproject/jans/casa:1.1.0-1
+        - name: admin-ui
+          image: ghcr.io/gluufederation/flex/admin-ui:5.1.0-1
+        - name: link
+          image: ghcr.io/janssenproject/jans/link:1.1.0-1
+        - name: saml
+          image: ghcr.io/janssenproject/jans/saml:1.1.0-1
+      artifacthub.io/license: Apache-2.0
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Gluu Cloud Identity and Access Management
+      catalog.cattle.io/featured: "4"
+      catalog.cattle.io/kube-version: '>=v1.21.0-0'
+      catalog.cattle.io/release-name: gluu
+    apiVersion: v2
+    appVersion: 5.1.0
+    created: "2024-03-17T00:34:25.533182326Z"
+    dependencies:
+    - condition: global.config.enabled
+      name: config
+      repository: file://./charts/config
+      version: 1.1.0
+    - condition: global.config-api.enabled
+      name: config-api
+      repository: file://./charts/config-api
+      version: 1.1.0
+    - condition: global.opendj.enabled
+      name: opendj
+      repository: file://./charts/opendj
+      version: 5.1.0
+    - condition: global.auth-server.enabled
+      name: auth-server
+      repository: file://./charts/auth-server
+      version: 1.1.0
+    - condition: global.admin-ui.enabled
+      name: admin-ui
+      repository: file://./charts/admin-ui
+      version: 5.1.0
+    - condition: global.fido2.enabled
+      name: fido2
+      repository: file://./charts/fido2
+      version: 1.1.0
+    - condition: global.scim.enabled
+      name: scim
+      repository: file://./charts/scim
+      version: 1.1.0
+    - condition: global.nginx-ingress.enabled
+      name: nginx-ingress
+      repository: file://./charts/nginx-ingress
+      version: 5.1.0
+    - condition: global.casa.enabled
+      name: casa
+      repository: file://./charts/casa
+      version: 1.1.0
+    - condition: global.auth-server-key-rotation.enabled
+      name: auth-server-key-rotation
+      repository: file://./charts/auth-server-key-rotation
+      version: 1.1.0
+    - condition: global.persistence.enabled
+      name: persistence
+      repository: file://./charts/persistence
+      version: 1.1.0
+    - condition: global.istio.ingress
+      name: cn-istio-ingress
+      repository: file://./charts/cn-istio-ingress
+      version: 5.1.0
+    - condition: global.link.enabled
+      name: link
+      repository: file://./charts/link
+      version: 1.1.0
+    - condition: global.saml.enabled
+      name: saml
+      repository: file://./charts/saml
+      version: 1.1.0
+    description: Gluu Access and Identity Management
+    digest: 59b51600b30b012e6e726a91bf590124226fc6fa3b72e8587af520c232f6b07e
+    home: https://www.gluu.org
+    icon: https://gluu.org/docs/gluu-server/favicon.ico
+    kubeVersion: '>=v1.21.0-0'
+    maintainers:
+    - email: team@gluu.org
+      name: moabu
+    name: gluu
+    sources:
+    - https://docs.gluu.org
+    urls:
+    - assets/gluu/gluu-5.1.0.tgz
+    version: 5.1.0
+  - annotations:
+      artifacthub.io/containsSecurityUpdates: "true"
+      artifacthub.io/images: |
+        - name: auth-server
           image: ghcr.io/janssenproject/jans/auth-server:1.0.22-1
         - name: auth-server-key-rotation
           image: ghcr.io/janssenproject/jans/certmanager:1.0.22-1
@@ -27273,12 +27411,11 @@ entries:
       artifacthub.io/license: Apache-2.0
       catalog.cattle.io/certified: partner
       catalog.cattle.io/display-name: Gluu Cloud Identity and Access Management
-      catalog.cattle.io/featured: "4"
       catalog.cattle.io/kube-version: '>=v1.21.0-0'
       catalog.cattle.io/release-name: gluu
     apiVersion: v2
     appVersion: 5.0.22
-    created: "2024-02-21T10:02:42.783088908Z"
+    created: "2024-03-17T00:34:12.444088734Z"
     dependencies:
     - condition: global.config.enabled
       name: config
@@ -27337,7 +27474,7 @@ entries:
       repository: file://./charts/saml
       version: 5.0.25
     description: Gluu Access and Identity Management
-    digest: 356a93210cd461d714860049813562ce98eecaa20ed0b371da4e5fbdf617b51b
+    digest: 6b1e2c40d2702016f902ca11b0c07457746eae3ee5fca03f2ca2cf077a9fc0cd
     home: https://www.gluu.org
     icon: https://gluu.org/docs/gluu-server/favicon.ico
     kubeVersion: '>=v1.21.0-0'
@@ -32256,6 +32393,63 @@ entries:
     - assets/jaeger/jaeger-operator-2.36.0.tgz
     version: 2.36.0
   jenkins:
+  - annotations:
+      artifacthub.io/category: integration-delivery
+      artifacthub.io/changes: |
+        - Update `kubernetes` to version `4199.va_1647c280eb_2`
+      artifacthub.io/images: |
+        - name: jenkins
+          image: docker.io/jenkins/jenkins:2.440.1-jdk17
+        - name: k8s-sidecar
+          image: docker.io/kiwigrid/k8s-sidecar:1.26.1
+        - name: inbound-agent
+          image: jenkins/inbound-agent:3206.vb_15dcf73f6a_9-3
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Chart Source
+          url: https://github.com/jenkinsci/helm-charts/tree/main/charts/jenkins
+        - name: Jenkins
+          url: https://www.jenkins.io/
+        - name: support
+          url: https://github.com/jenkinsci/helm-charts/issues
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Jenkins
+      catalog.cattle.io/kube-version: '>=1.14-0'
+      catalog.cattle.io/release-name: jenkins
+    apiVersion: v2
+    appVersion: 2.440.1
+    created: "2024-03-17T00:34:26.056511915Z"
+    description: 'Jenkins - Build great things at any scale! As the leading open source
+      automation server, Jenkins provides over 1800 plugins to support building, deploying
+      and automating any project. '
+    digest: 195b09165531a02eb631ebf96dd46d51a15cae7d98972209408363405d6b285d
+    home: https://www.jenkins.io/
+    icon: https://get.jenkins.io/art/jenkins-logo/logo.svg
+    keywords:
+    - jenkins
+    - ci
+    - devops
+    maintainers:
+    - email: maor.friedman@redhat.com
+      name: maorfr
+    - email: mail@torstenwalter.de
+      name: torstenwalter
+    - email: garridomota@gmail.com
+      name: mogaal
+    - email: wmcdona89@gmail.com
+      name: wmcdona89
+    - email: timjacomb1@gmail.com
+      name: timja
+    name: jenkins
+    sources:
+    - https://github.com/jenkinsci/jenkins
+    - https://github.com/jenkinsci/docker-inbound-agent
+    - https://github.com/maorfr/kube-tasks
+    - https://github.com/jenkinsci/configuration-as-code-plugin
+    type: application
+    urls:
+    - assets/jenkins/jenkins-5.1.1.tgz
+    version: 5.1.1
   - annotations:
       artifacthub.io/category: integration-delivery
       artifacthub.io/changes: |
@@ -41992,6 +42186,35 @@ entries:
       catalog.cattle.io/display-name: ngrok Ingress Controller
       catalog.cattle.io/release-name: kubernetes-ingress-controller
     apiVersion: v2
+    appVersion: 0.10.3
+    created: "2024-03-17T00:34:28.66737711Z"
+    dependencies:
+    - name: common
+      repository: file://./charts/common
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: A Kubernetes ingress controller built using ngrok.
+    digest: e584cd3d234a6bc94b039f49df632caa8c145d04b81effdf70d785b4a0e2a188
+    home: https://ngrok.com
+    icon: https://assets-global.website-files.com/63ed4bc7a4b189da942a6b8c/6411ffa0b395a44345ed2b1a_Frame%201.svg
+    keywords:
+    - ngrok
+    - networking
+    - ingress
+    - edge
+    - api gateway
+    name: kubernetes-ingress-controller
+    sources:
+    - https://github.com/ngrok/kubernetes-ingress-controller
+    urls:
+    - assets/ngrok/kubernetes-ingress-controller-0.12.3.tgz
+    version: 0.12.3
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: ngrok Ingress Controller
+      catalog.cattle.io/release-name: kubernetes-ingress-controller
+    apiVersion: v2
     appVersion: 0.10.2
     created: "2024-03-15T00:32:47.568820151Z"
     dependencies:
@@ -46654,6 +46877,32 @@ entries:
     - assets/metallb/metallb-0.13.7.tgz
     version: 0.13.7
   minio-operator:
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Minio Operator
+      catalog.cattle.io/kube-version: '>=1.19-0'
+      catalog.cattle.io/release-name: minio-operator
+    apiVersion: v2
+    appVersion: v5.0.14
+    created: "2024-03-17T00:34:28.055939394Z"
+    description: A Helm chart for MinIO Operator
+    digest: 011a85a2f2f976565029a2a6f9eca6f0c2444152cf07eafcf0803838edda4a66
+    home: https://min.io
+    icon: https://min.io/resources/img/logo/MINIO_wordmark.png
+    keywords:
+    - storage
+    - object-storage
+    - S3
+    maintainers:
+    - email: dev@minio.io
+      name: MinIO, Inc
+    name: minio-operator
+    sources:
+    - https://github.com/minio/operator
+    type: application
+    urls:
+    - assets/minio/minio-operator-5.0.14.tgz
+    version: 5.0.14
   - annotations:
       catalog.cattle.io/certified: partner
       catalog.cattle.io/display-name: Minio Operator
@@ -58708,6 +58957,29 @@ entries:
       catalog.cattle.io/release-name: psmdb-operator
     apiVersion: v2
     appVersion: 1.15.0
+    created: "2024-03-17T00:34:28.967916595Z"
+    description: A Helm chart for deploying the Percona Operator for MongoDB
+    digest: 04daad9e92e6997730ac84831f5f7bf3cd38b8b909126a53abb7fc97ed30e078
+    home: https://docs.percona.com/percona-operator-for-mongodb/
+    icon: https://raw.githubusercontent.com/percona/percona-server-mongodb-operator/main/operator.png
+    maintainers:
+    - email: tomislav.plavcic@percona.com
+      name: tplavcic
+    - email: natalia.marukovich@percona.com
+      name: nmarukovich
+    - email: sergey.pronin@percona.com
+      name: spron-in
+    name: psmdb-operator
+    urls:
+    - assets/percona/psmdb-operator-1.15.4.tgz
+    version: 1.15.4
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Percona Operator for MongoDB
+      catalog.cattle.io/kube-version: '>=1.21-0'
+      catalog.cattle.io/release-name: psmdb-operator
+    apiVersion: v2
+    appVersion: 1.15.0
     created: "2024-03-15T00:32:47.867009119Z"
     description: A Helm chart for deploying the Percona Operator for MongoDB
     digest: d5318817020580e091f6bb0be01834e9a8a75b3b553ab525acf8050acae0e13d
@@ -66705,6 +66977,43 @@ entries:
       licenses: Apache-2.0
     apiVersion: v2
     appVersion: 3.5.1
+    created: "2024-03-17T00:34:10.133935619Z"
+    dependencies:
+    - name: common
+      repository: file://./charts/common
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Apache Spark is a high-performance engine for large-scale computing
+      tasks, such as data processing, machine learning and real-time data streaming.
+      It includes APIs for Java, Python, Scala and R.
+    digest: b447cf69b9d7609f8c679be408a296c8a488dd336f0aae53915403611324d29c
+    home: https://bitnami.com
+    icon: https://www.apache.org/logos/res/spark/default.png
+    keywords:
+    - apache
+    - spark
+    maintainers:
+    - name: VMware, Inc.
+      url: https://github.com/bitnami/charts
+    name: spark
+    sources:
+    - https://github.com/bitnami/charts/tree/main/bitnami/spark
+    urls:
+    - assets/bitnami/spark-9.0.0.tgz
+    version: 9.0.0
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Apache Spark
+      catalog.cattle.io/kube-version: '>=1.19-0'
+      catalog.cattle.io/release-name: spark
+      category: Infrastructure
+      images: |
+        - name: spark
+          image: docker.io/bitnami/spark:3.5.1-debian-12-r0
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 3.5.1
     created: "2024-03-15T00:32:10.454089969Z"
     dependencies:
     - name: common
@@ -72813,6 +73122,51 @@ entries:
     - assets/intel/tcs-issuer-0.1.0.tgz
     version: 0.1.0
   tomcat:
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Apache Tomcat
+      catalog.cattle.io/kube-version: '>=1.19-0'
+      catalog.cattle.io/release-name: tomcat
+      category: ApplicationServer
+      images: |
+        - name: jmx-exporter
+          image: docker.io/bitnami/jmx-exporter:0.20.0-debian-12-r11
+        - name: os-shell
+          image: docker.io/bitnami/os-shell:12-debian-12-r16
+        - name: tomcat
+          image: docker.io/bitnami/tomcat:10.1.19-debian-12-r2
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 10.1.19
+    created: "2024-03-17T00:34:10.171739452Z"
+    dependencies:
+    - name: common
+      repository: file://./charts/common
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Apache Tomcat is an open-source web server designed to host and run
+      Java-based web applications. It is a lightweight server with a good performance
+      for applications running in production environments.
+    digest: 88e1ce9869f385a2c13a7f20a255a3db314bf09f00d0a61bd96adaf5edee972f
+    home: https://bitnami.com
+    icon: https://svn.apache.org/repos/asf/comdev/project-logos/originals/tomcat.svg
+    keywords:
+    - tomcat
+    - java
+    - http
+    - web
+    - application server
+    - jsp
+    maintainers:
+    - name: VMware, Inc.
+      url: https://github.com/bitnami/charts
+    name: tomcat
+    sources:
+    - https://github.com/bitnami/charts/tree/main/bitnami/tomcat
+    urls:
+    - assets/bitnami/tomcat-10.17.1.tgz
+    version: 10.17.1
   - annotations:
       catalog.cattle.io/certified: partner
       catalog.cattle.io/display-name: Apache Tomcat
