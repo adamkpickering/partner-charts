@@ -1,7 +1,7 @@
 annotations:
   artifacthub.io/category: integration-delivery
   artifacthub.io/changes: |
-    - Add `agent.restrictedPssSecurityContext` to automatically inject in the jnlp container a securityContext that is suitable for the use of the restricted Pod Security Standard
+    - Update `kubernetes` to version `4203.v1dd44f5b_1cf9`
   artifacthub.io/images: |
     - name: jenkins
       image: docker.io/jenkins/jenkins:2.440.1-jdk17
@@ -50,4 +50,4 @@ sources:
 - https://github.com/maorfr/kube-tasks
 - https://github.com/jenkinsci/configuration-as-code-plugin
 type: application
-version: 5.1.0
+version: 5.1.2
