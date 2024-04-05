@@ -88,6 +88,63 @@ entries:
       category: WorkFlow
       images: |
         - name: airflow
+          image: docker.io/bitnami/airflow:2.8.4-debian-12-r0
+        - name: airflow-exporter
+          image: docker.io/bitnami/airflow-exporter:0.20220314.0-debian-12-r27
+        - name: airflow-scheduler
+          image: docker.io/bitnami/airflow-scheduler:2.8.4-debian-12-r0
+        - name: airflow-worker
+          image: docker.io/bitnami/airflow-worker:2.8.4-debian-12-r0
+        - name: git
+          image: docker.io/bitnami/git:2.44.0-debian-12-r1
+        - name: os-shell
+          image: docker.io/bitnami/os-shell:12-debian-12-r17
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 2.8.4
+    created: "2024-04-05T00:39:24.281545301Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: file://./charts/redis
+      version: 19.x.x
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: file://./charts/postgresql
+      version: 15.x.x
+    - name: common
+      repository: file://./charts/common
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Apache Airflow is a tool to express and execute workflows as directed
+      acyclic graphs (DAGs). It includes utilities to schedule tasks, monitor task
+      progress and handle task dependencies.
+    digest: bb8fc3a2bc98ac87c79ec11477403a013f199ee7fb8099199b63f7470fb8282c
+    home: https://bitnami.com
+    icon: https://svn.apache.org/repos/asf/comdev/project-logos/originals/airflow-1.svg
+    keywords:
+    - apache
+    - airflow
+    - workflow
+    - dag
+    maintainers:
+    - name: VMware, Inc.
+      url: https://github.com/bitnami/charts
+    name: airflow
+    sources:
+    - https://github.com/bitnami/charts/tree/main/bitnami/airflow
+    urls:
+    - assets/bitnami/airflow-18.0.1.tgz
+    version: 18.0.1
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Apache Airflow
+      catalog.cattle.io/kube-version: '>=1.19-0'
+      catalog.cattle.io/release-name: airflow
+      category: WorkFlow
+      images: |
+        - name: airflow
           image: docker.io/bitnami/airflow:2.8.3-debian-12-r0
         - name: airflow-exporter
           image: docker.io/bitnami/airflow-exporter:0.20220314.0-debian-12-r27
@@ -2868,8 +2925,8 @@ entries:
   argo-cd:
   - annotations:
       artifacthub.io/changes: |
-        - kind: added
-          description: Add sizeLimit params on EmptyDir Volume
+        - kind: fixed
+          description: Add required label for CLI to redis-ha-haproxy pods
       artifacthub.io/signKey: |
         fingerprint: 2B8F22F57260EFA67BE1C5824B11F800CD9D2252
         url: https://argoproj.github.io/argo-helm/pgp_keys.asc
@@ -2880,7 +2937,7 @@ entries:
       catalog.cattle.io/release-name: argo-cd
     apiVersion: v2
     appVersion: v2.10.5
-    created: "2024-04-03T10:29:58.18156922-06:00"
+    created: "2024-04-05T00:39:23.087016689Z"
     dependencies:
     - condition: redis-ha.enabled
       name: redis-ha
@@ -2888,7 +2945,46 @@ entries:
       version: 4.26.1
     description: A Helm chart for Argo CD, a declarative, GitOps continuous delivery
       tool for Kubernetes.
-    digest: 8937dabdf0f2237a1071750a815d986d8b77a48aee69a77c428f6dfeae47ede4
+    digest: 21c6433bc2b27df8833b825901d048c765a5e6a448d89f38b229e5f83a34b0d0
+    home: https://github.com/argoproj/argo-helm
+    icon: https://argo-cd.readthedocs.io/en/stable/assets/logo.png
+    keywords:
+    - argoproj
+    - argocd
+    - gitops
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - name: argoproj
+      url: https://argoproj.github.io/
+    name: argo-cd
+    sources:
+    - https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
+    - https://github.com/argoproj/argo-cd
+    urls:
+    - assets/argo/argo-cd-6.7.9.tgz
+    version: 6.7.9
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Add sizeLimit params on EmptyDir Volume
+      artifacthub.io/signKey: |
+        fingerprint: 2B8F22F57260EFA67BE1C5824B11F800CD9D2252
+        url: https://argoproj.github.io/argo-helm/pgp_keys.asc
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Argo CD
+      catalog.cattle.io/kube-version: '>=1.23.0-0'
+      catalog.cattle.io/release-name: argo-cd
+    apiVersion: v2
+    appVersion: v2.10.5
+    created: "2024-04-05T00:39:07.323662927Z"
+    dependencies:
+    - condition: redis-ha.enabled
+      name: redis-ha
+      repository: file://./charts/redis-ha
+      version: 4.26.1
+    description: A Helm chart for Argo CD, a declarative, GitOps continuous delivery
+      tool for Kubernetes.
+    digest: 7056260e29a7a3eb93e144563528f150b0ccfe0fea30064b569d541e73837379
     home: https://github.com/argoproj/argo-helm
     icon: https://argo-cd.readthedocs.io/en/stable/assets/logo.png
     keywords:
@@ -20190,6 +20286,32 @@ entries:
       catalog.cattle.io/release-name: vxflexos
     apiVersion: v2
     appVersion: 2.10.0
+    created: "2024-04-05T00:39:27.890333833Z"
+    description: 'VxFlex OS CSI (Container Storage Interface) driver Kubernetes integration.
+      This chart includes everything required to provision via CSI as well as a VxFlex
+      OS StorageClass. '
+    digest: eb6d174b2a7bed0e42cca2af02b813239d0d5e3102aab9153ee5a616dc88a5ae
+    icon: https://partner-charts.rancher.io/assets/logos/dell.png
+    keywords:
+    - csi
+    - storage
+    kubeVersion: '>= 1.21.0 < 1.30.0'
+    maintainers:
+    - name: DellEMC
+    name: csi-vxflexos
+    sources:
+    - https://github.com/dell/csi-vxflexos
+    urls:
+    - assets/dell/csi-vxflexos-2.10.1.tgz
+    version: 2.10.1
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Dell CSI PowerFlex
+      catalog.cattle.io/kube-version: '>= 1.21.0 < 1.30.0'
+      catalog.cattle.io/namespace: vxflexos
+      catalog.cattle.io/release-name: vxflexos
+    apiVersion: v2
+    appVersion: 2.10.0
     created: "2024-03-25T14:58:32.490916286-06:00"
     description: 'VxFlex OS CSI (Container Storage Interface) driver Kubernetes integration.
       This chart includes everything required to provision via CSI as well as a VxFlex
@@ -29829,6 +29951,37 @@ entries:
     - assets/gopaddle/gopaddle-4.2.5.tgz
     version: 4.2.5
   haproxy:
+  - annotations:
+      artifacthub.io/changes: |
+        - Use Ingress Controller 1.11.3 version for base image
+        - Add more permissions needed for techdump tool
+        - Parametrize metrics service type (#231)
+        - Require K8s >= 1.23.0
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: HAProxy Kubernetes Ingress Controller
+      catalog.cattle.io/kube-version: '>=1.23.0-0'
+      catalog.cattle.io/release-name: haproxy
+    apiVersion: v2
+    appVersion: 1.11.3
+    created: "2024-04-05T00:39:28.370988639Z"
+    description: A Helm chart for HAProxy Kubernetes Ingress Controller
+    digest: 3d877ce24fd8809f876c80e2d95def46721e4e74205951deed84069b8d0ddecf
+    home: https://github.com/haproxytech/helm-charts/tree/main/kubernetes-ingress
+    icon: https://raw.githubusercontent.com/haproxytech/helm-charts/main/kubernetes-ingress/chart-icon.png
+    keywords:
+    - ingress
+    - haproxy
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - email: dkorunic@haproxy.com
+      name: Dinko Korunic
+    name: haproxy
+    sources:
+    - https://github.com/haproxytech/kubernetes-ingress
+    type: application
+    urls:
+    - assets/haproxy/haproxy-1.39.0.tgz
+    version: 1.39.0
   - annotations:
       artifacthub.io/changes: |
         - Use Ingress Controller 1.11.2 version for base image
@@ -44591,15 +44744,47 @@ entries:
       catalog.cattle.io/kube-version: '>=1.22.0-0'
       catalog.cattle.io/release-name: linkerd-control-plane
     apiVersion: v2
-    appVersion: edge-24.3.5
-    created: "2024-04-03T10:30:29.925844916-06:00"
+    appVersion: edge-24.4.1
+    created: "2024-04-05T00:39:43.886700742Z"
     dependencies:
     - name: partials
       repository: file://./charts/partials
       version: 0.1.0
     description: 'Linkerd gives you observability, reliability, and security for your
       microservices — with no code change required. '
-    digest: 29cba45fb8ba8d2433c2efbe27bdb5a87177a53ad4f242fd3777fd830038c749
+    digest: de45c5244e9b2fd74f7ed89349e4331de0a588a989452e209d718deb0c5c7b53
+    home: https://linkerd.io
+    icon: https://linkerd.io/images/logo-only-200h.png
+    keywords:
+    - service-mesh
+    kubeVersion: '>=1.22.0-0'
+    maintainers:
+    - email: cncf-linkerd-dev@lists.cncf.io
+      name: Linkerd authors
+      url: https://linkerd.io/
+    name: linkerd-control-plane
+    sources:
+    - https://github.com/linkerd/linkerd2/
+    type: application
+    urls:
+    - assets/linkerd/linkerd-control-plane-2024.4.1.tgz
+    version: 2024.4.1
+  - annotations:
+      catalog.cattle.io/auto-install: linkerd-crds
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Linkerd Control Plane
+      catalog.cattle.io/kube-version: '>=1.22.0-0'
+      catalog.cattle.io/release-name: linkerd-control-plane
+    apiVersion: v2
+    appVersion: edge-24.3.5
+    created: "2024-04-05T00:39:30.857552121Z"
+    dependencies:
+    - name: partials
+      repository: file://./charts/partials
+      version: 0.1.0
+    description: 'Linkerd gives you observability, reliability, and security for your
+      microservices — with no code change required. '
+    digest: 9c2b2d80716b7022c3b270f283dd9d0ddf8d134cd93ddaa39bb91e50a88c50bb
     home: https://linkerd.io
     icon: https://linkerd.io/images/logo-only-200h.png
     keywords:
@@ -45028,6 +45213,36 @@ entries:
       catalog.cattle.io/kube-version: '>=1.22.0-0'
       catalog.cattle.io/release-name: linkerd-crds
     apiVersion: v2
+    created: "2024-04-05T00:39:43.900620812Z"
+    dependencies:
+    - name: partials
+      repository: file://./charts/partials
+      version: 0.1.0
+    description: 'Linkerd gives you observability, reliability, and security for your
+      microservices — with no code change required. '
+    digest: ef83bb7ee51cf94059933c016401fdd6ece3a7a80fdff4023b55af72a89a5267
+    home: https://linkerd.io
+    icon: https://linkerd.io/images/logo-only-200h.png
+    keywords:
+    - service-mesh
+    kubeVersion: '>=1.22.0-0'
+    maintainers:
+    - email: cncf-linkerd-dev@lists.cncf.io
+      name: Linkerd authors
+      url: https://linkerd.io/
+    name: linkerd-crds
+    sources:
+    - https://github.com/linkerd/linkerd2/
+    type: application
+    urls:
+    - assets/linkerd/linkerd-crds-2024.4.1.tgz
+    version: 2024.4.1
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Linkerd CRDs
+      catalog.cattle.io/kube-version: '>=1.22.0-0'
+      catalog.cattle.io/release-name: linkerd-crds
+    apiVersion: v2
     created: "2024-04-03T10:30:29.933562768-06:00"
     dependencies:
     - name: partials
@@ -45113,6 +45328,41 @@ entries:
     - assets/linkerd/linkerd-crds-2024.3.3.tgz
     version: 2024.3.3
   loft:
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Loft
+      catalog.cattle.io/kube-version: '>=1.22-0'
+      catalog.cattle.io/release-name: loft
+    apiVersion: v2
+    created: "2024-04-05T00:39:43.927755632Z"
+    description: Secure Cluster Sharing, Self-Service Namespace Provisioning and Virtual
+      Clusters
+    digest: fa1cd4fa69ec53df1cc354a72e4090ee86d5d44073a8d3f7d0fcd38ccdcbad20
+    home: https://loft.sh
+    icon: https://static.loft.sh/loft/logo/loft-logo.svg
+    keywords:
+    - developer
+    - development
+    - sharing
+    - share
+    - multi-tenancy
+    - tenancy
+    - cluster
+    - space
+    - namespace
+    - vcluster
+    - vclusters
+    maintainers:
+    - email: info@loft.sh
+      name: Loft Labs, Inc.
+      url: https://twitter.com/loft_sh
+    name: loft
+    sources:
+    - https://github.com/loft-sh/loft
+    type: application
+    urls:
+    - assets/loft/loft-3.4.3.tgz
+    version: 3.4.3
   - annotations:
       catalog.cattle.io/certified: partner
       catalog.cattle.io/display-name: Loft
@@ -77091,6 +77341,43 @@ entries:
     version: 10.4.9
   traefik:
   - annotations:
+      artifacthub.io/changes: "- \"fix: remove null annotations on dashboard `IngressRoute`\"\n-
+        \"fix(rbac): do not create clusterrole for namespace deployment on Traefik
+        v3\"\n- \"feat: restrict access to secrets\"\n- \"feat!: :boom: refactor custom
+        services and port exposure\"\n- \"chore(release): \U0001F680 publish v27.0.0\"\n"
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: Traefik Proxy
+      catalog.cattle.io/kube-version: '>=1.16.0-0'
+      catalog.cattle.io/release-name: traefik
+    apiVersion: v2
+    appVersion: v2.11.0
+    created: "2024-04-05T00:39:45.757717185Z"
+    description: A Traefik based Kubernetes ingress controller
+    digest: ed7920b9189a5929e1d0fce69761ff97729bf533e69c5f50b25fdb6273504827
+    home: https://traefik.io/
+    icon: https://raw.githubusercontent.com/traefik/traefik/v2.3/docs/content/assets/img/traefik.logo.png
+    keywords:
+    - traefik
+    - ingress
+    - networking
+    kubeVersion: '>=1.16.0-0'
+    maintainers:
+    - email: michel.loiseleur@traefik.io
+      name: mloiseleur
+    - email: charlie.haley@traefik.io
+      name: charlie-haley
+    - email: remi.buisson@traefik.io
+      name: darkweaver87
+    - name: jnoordsij
+    name: traefik
+    sources:
+    - https://github.com/traefik/traefik
+    - https://github.com/traefik/traefik-helm-chart
+    type: application
+    urls:
+    - assets/traefik/traefik-27.0.0.tgz
+    version: 27.0.0
+  - annotations:
       artifacthub.io/changes: "- \"fix: \U0001F41B missing quote on experimental plugin
         args\"\n- \"fix: update traefik v3 serverstransporttcps CRD\"\n- \"feat: set
         runtimeClassName on pod spec\"\n- \"feat: create v1 Gateway and GatewayClass
@@ -78853,6 +79140,60 @@ entries:
     - assets/hashicorp/vault-0.22.0.tgz
     version: 0.22.0
   wordpress:
+  - annotations:
+      catalog.cattle.io/certified: partner
+      catalog.cattle.io/display-name: WordPress
+      catalog.cattle.io/kube-version: '>=1.19-0'
+      catalog.cattle.io/release-name: wordpress
+      category: CMS
+      images: |
+        - name: apache-exporter
+          image: docker.io/bitnami/apache-exporter:1.0.7-debian-12-r1
+        - name: os-shell
+          image: docker.io/bitnami/os-shell:12-debian-12-r18
+        - name: wordpress
+          image: docker.io/bitnami/wordpress:6.5.0-debian-12-r0
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 6.5.0
+    created: "2024-04-05T00:39:26.762624064Z"
+    dependencies:
+    - condition: memcached.enabled
+      name: memcached
+      repository: file://./charts/memcached
+      version: 7.x.x
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: file://./charts/mariadb
+      version: 18.x.x
+    - name: common
+      repository: file://./charts/common
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: WordPress is the world's most popular blogging and content management
+      platform. Powerful yet simple, everyone from students to global corporations
+      use it to build beautiful, functional websites.
+    digest: 01be56c23a78b89c5354d1e97bba18f51048a1132a38311ee1609cfee9f0f97d
+    home: https://bitnami.com
+    icon: https://s.w.org/style/images/about/WordPress-logotype-simplified.png
+    keywords:
+    - application
+    - blog
+    - cms
+    - http
+    - php
+    - web
+    - wordpress
+    maintainers:
+    - name: VMware, Inc.
+      url: https://github.com/bitnami/charts
+    name: wordpress
+    sources:
+    - https://github.com/bitnami/charts/tree/main/bitnami/wordpress
+    urls:
+    - assets/bitnami/wordpress-22.1.1.tgz
+    version: 22.1.1
   - annotations:
       catalog.cattle.io/certified: partner
       catalog.cattle.io/display-name: WordPress
